@@ -129,13 +129,14 @@ pipeline {
         stage('Snyk Scan') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'snyk-token-1', variable: 'SNYK_TOKEN')]) {
+                    withCredentials([string(credentialsId: 'snyk-token', variable: 'SNYK_TOKEN')]) {
 
                         def snykStatus = sh(
                             script: '''
                                 snyk auth $SNYK_TOKEN
                                 snyk test
                                 snyk code test
+                                snyk monitor -d
                             ''',
                             returnStatus: true
                         )
@@ -322,8 +323,8 @@ pipeline {
                             -pl ${AFFECTED_MODULES} \
                             ${MVN_MAKE_FLAGS} \
                             sonar:sonar \
-                            -Dsonar.projectKey=yas-project\
-                            -Dsonar.host.url=http://localhost:9000 \
+                            -Dsonar.projectKey=thang-ngquoc_yas\
+                            -Dsonar.host.url=https://sonarcloud.io \
                             -Dsonar.login=$SONAR_TOKEN \
                             -Dsonar.qualitygate.wait=true
                     """
