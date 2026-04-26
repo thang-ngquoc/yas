@@ -114,7 +114,7 @@ public class CheckoutService {
                 -> new NotFoundException(CHECKOUT_NOT_FOUND, id));
 
         if (isNotOwnedByCurrentUser(checkout)) {
-            throw new ForbiddenException(ApiConstant.FORBIDDEN, "You can not view this checkout");
+            throw new ForbiddenException(ApiConstant.FORBIDDEN, "You can this checkout");
         }
 
         CheckoutVm checkoutVm = checkoutMapper.toVm(checkout);
